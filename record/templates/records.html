@@ -12,7 +12,7 @@
             {% csrf_token %}
             <div>
                 <label>Username</label>
-                <input type="text" id="user" name="user" placeholder="{{ request.user }}"/>
+                <label id="user">{{ request.user }}</label>
             </div>
             <div>
                 <label>Score</label>
@@ -26,5 +26,33 @@
         {{record.score}}
         {{record.date}}
     {% endfor %}
+<script>
+    $(document).ready(function(){
+    $('#submit').on('click', function(){
+        $user = $('#user').text();
+        $score = $('#score').val();
+  
+        if($user == "" || $score == ""){
+            alert("Please complete field");
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "insert",
+                data:{
+                    user: $user,
+                    score: $score,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(){
+                    alert('Save Data');
+                    $('#user').text('');
+                    $('#score').val('');
+                    window.location = "/";
+                }
+            });
+        }
+    });
+});
+</script>
 </body>
 </html>
