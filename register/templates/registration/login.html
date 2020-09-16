@@ -1,0 +1,6 @@
+<form method='post' class="form-group">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="btn btn-success">Login</button>
+    <p>Not registered yet? Create your account here::<a href="{% url 'register' %}">Register</a></p>
+</form>
